@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Label, Input, Button } from './Form.styles'
 import { useSelector, useDispatch } from 'react-redux'
-import addOperations from '../../redux/contacts/contacts-operations';
-import { getContact } from '../../redux/contacts/contact-selectors';
-import fetchCont from '../../redux/contacts/contacts-operations'
+import {contactsOperations, contactsSelectors} from 'redux/contacts'
+
 
 const Form = () => {
-   const contact = useSelector(getContact)
+   const contact = useSelector(contactsSelectors.getContact)
    const dispatch = useDispatch();
    
    const [name, setName] = useState('')
@@ -28,7 +27,7 @@ const Form = () => {
    };
 
    useEffect(() => {
-    dispatch(fetchCont.fetchContact())
+    dispatch(contactsOperations.fetchContact())
    },[dispatch])
 
    
@@ -41,7 +40,7 @@ const Form = () => {
       alert('This name is already in the phone book ');
     } else {
    
-     dispatch(addOperations.addContacts({ name, number }));
+     dispatch(contactsOperations.addContact({ name, number }));
     }
      setName('')
      setNumber('')
