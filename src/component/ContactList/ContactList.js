@@ -1,7 +1,7 @@
 import ContactItem from '../ContactItem'
 import { useSelector, useDispatch } from 'react-redux'
 import { List } from './ContactList.styles'
-import deleteCont from '../../redux/contacts/contact-action';
+import deleteOperation from '../../redux/contacts/contacts-operations';
 import {getVisibleContacts} from './contactList-selectors'
 
 function ContactList() {
@@ -10,13 +10,13 @@ function ContactList() {
   
    return (
       <List>
-            {contacts.map(({ id, name, number }) =>
+            {contacts.map(({ id, name, phone }) =>
             <ContactItem
                key={id}
                id={id}
                name={name}
-               number={number}
-               onDeleteContact={ id => dispatch(deleteCont.deleteContact(id))}
+               phone={phone}
+               onDeleteContact={ id => dispatch(deleteOperation.deleteContact(id))}
                
             />
            )}

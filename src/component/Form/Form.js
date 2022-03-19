@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Label, Input, Button } from './Form.styles'
 import { useSelector, useDispatch } from 'react-redux'
-import addCont from '../../redux/contacts/contact-action';
-import { getContact } from '../../redux/contacts/contact-selectors'
+import addOperations from '../../redux/contacts/contacts-operations';
+import { getContact } from '../../redux/contacts/contact-selectors';
+import fetchCont from '../../redux/contacts/contacts-operations'
 
 const Form = () => {
    const contact = useSelector(getContact)
@@ -26,6 +27,10 @@ const Form = () => {
  }
    };
 
+   useEffect(() => {
+    dispatch(fetchCont.fetchContact())
+   },[dispatch])
+
    
   const handelSubmit = e => {
      e.preventDefault();
@@ -36,7 +41,7 @@ const Form = () => {
       alert('This name is already in the phone book ');
     } else {
    
-     dispatch(addCont.addContacts({ name, number }));
+     dispatch(addOperations.addContacts({ name, number }));
     }
      setName('')
      setNumber('')

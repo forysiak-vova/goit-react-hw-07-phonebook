@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
-import changeFil from '../../redux/contacts/contact-action'
+import {changeFilter} from '../../redux/contacts/contact-action'
 import { Input, Label } from './Filter.styles'
 import { getFilter } from '../../redux/contacts/contact-selectors'
 
@@ -12,7 +12,7 @@ const Filter = () => {
          <Input
          type='text'
             value={value}
-            onChange={(e) => dispatch(changeFil.changeFilter(e.currentTarget.value))}
+            onChange={(e) => dispatch(changeFilter(e.currentTarget.value))}
          />
 </Label>
    )}
