@@ -1,20 +1,22 @@
 import PropTypes from 'prop-types';
 import {ContactName,Item,Button} from './ContactItem.styles'
 
-function ContactItem({id, name, phone, onDeleteContact}) { 
+function ContactItem({id, name, number, func}) { 
    return (
       <Item>
                <ContactName> {name}</ContactName>
-         <p>( {phone} )</p>
-              <Button onClick={()=>onDeleteContact(id)}>delete</Button>
+         <p>( {number} )</p>
+         <Button onClick={() => func(id)}>
+            delete
+         </Button>
       </Item>
 )
 }
 ContactItem.propTypes = {
    id: PropTypes.string.isRequired,
    name: PropTypes.string.isRequired,
-   phone: PropTypes.string.isRequired,
-   onDeleteContact: PropTypes.func.isRequired
+   number: PropTypes.string.isRequired,
+   func: PropTypes.func.isRequired
 
 
    

@@ -12,6 +12,8 @@ import {
     REGISTER,
 } from 'redux-persist';
 // import storage from 'redux-persist/lib/storage'
+import { contactApi } from './contacts/contacts-operations';
+import { setupListeners } from '@reduxjs/toolkit/query'
 
 // const persistConfig = {
 //   key: 'items',
@@ -35,14 +37,20 @@ const middleware = (getDefaultMiddleware) => getDefaultMiddleware({
 // });
 const store = configureStore({
     reducer: {
-    counter: contactReducer,
+        counter: contactReducer,
+         [contactApi.reducerPath]: contactApi.reducer,
 },
     middleware,
-    devTools: process.env.NODE_ENV === 'development'
+    devTools: process.env.NODE_ENV === 'development',
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(contactApi.middleware),
+    //   middeleware: (getDefaultMiddleware) => [...getDefaultMiddleware, pokemonApi.middleware]
 });
 
 // const persistor = persistStore(store)
 
 // export default {store, persistor};
+
+setupListeners(store.dispatch)
 
 export default store;
