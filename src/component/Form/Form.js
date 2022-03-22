@@ -1,28 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Label, Input, Button, Add, Spinner } from './Form.styles'
-import { useSelector, useDispatch } from 'react-redux'
-import { contactsOperations, contactsSelectors } from 'redux/contacts'
-import Loader from 'react-js-loader'
-import { getLoading } from '../../redux/contacts/contact-selectors';
-import { useFetchContactsQuery } from '../../redux/contacts/contacts-operations'
-import {useCreateContactMutation} from 'redux/contacts/contacts-operations'
+import React, { useState } from "react";
+import { Label, Input, Button} from './Form.styles'
+import { useCreateContactMutation } from 'redux/contacts/contacts-operations';
+import PropTypes from 'prop-types';
 
 
 const Form = ({contacts}) => {
-   // const contact = useSelector(contactsSelectors.getContact)
    const [createContact] = useCreateContactMutation()
-   // const dispatch = useDispatch();
-   // const loading = useSelector(getLoading);
-   // console.log(createContact)
    const [name, setName] = useState('')
    const [number, setNumber] = useState('')
-   // const [pokemonName, setPokemonName] = useState('')
-   // const { data, error, isFetching } = useFetchContactsQuery('', {
-   //    // skip: data === '',
-   //    // pollingInterval: 3000,
-   //    // refetchOnFocus: true,
-   // })
-//  console.log(data)
     const handelChange = e => {
        const { name, value } = e.currentTarget;
       
@@ -38,10 +23,6 @@ const Form = ({contacts}) => {
  }
    };
 
-   // useEffect(() => {
-   //  dispatch(contactsOperations.fetchContact())
-   // },[dispatch])
-
    
   const handelSubmit = e => {
      e.preventDefault();
@@ -52,8 +33,6 @@ const Form = ({contacts}) => {
       alert('This name is already in the phone book ');
     } else {
    createContact({name,number})
-      //  dispatch(contactsOperations.addContact({ name, number }));
-      //  setPokemonName({ name, number })
     }
      setName('')
      setNumber('')
@@ -86,13 +65,14 @@ const Form = ({contacts}) => {
              onChange={handelChange}
            />
          </Label>
-            {/* <Button type='submit'>{isFetching ? <Spinner>
-         <Loader type="bubble-scale" bgColor={"#000"} title={"bubble-scale"} color={'#000'} size={30} />
-            </Spinner> : <Add>Add Contact</Add>}</Button> */}
             <Button type='submit'>Add Contact</Button>
       </form>
       )
    
+}
+
+Form.propType = {
+   contacts: PropTypes.array.isRequired
 }
 
 export default Form;

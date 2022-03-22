@@ -1,17 +1,36 @@
 import { combineReducers } from "redux";
 import { createReducer } from '@reduxjs/toolkit'
-import {
-   // addContactRequest,
-   // addContactSuccess,
-   // addContactError,
-   // deleteContactRequest,
-   // deleteContactSuccess,
-   // deleteContactError,
-   // fetchContactRequest,
-   // fetchContactSuccess,
-   // fetchContactError,
-   changeFilter
-} from './contact-action'
+import { changeFilter } from './contact-action';
+
+const filter = createReducer('', {
+   [changeFilter]: (_, { payload }) => payload
+});
+
+export default combineReducers ({
+   filter,
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // import fetchCont from "./contacts-operations";
 // import addCont from './contacts-operations.js';
@@ -35,9 +54,6 @@ import {
 //    [deleteCont.deleteContact.rejected]: () => false,
 // })
 
-const filter = createReducer('', {
-   [changeFilter]: (_, { payload }) => payload
-})
 
 // const error = createReducer(null, {
 //     [fetchCont.fetchContact.rejected]: (_, { payload }) => payload,
@@ -51,9 +67,3 @@ const filter = createReducer('', {
     
 // })
 
-export default combineReducers ({
-   // contact,
-   filter,
-   // loading,
-   // error,
-});

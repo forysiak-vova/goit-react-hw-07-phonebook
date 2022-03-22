@@ -1,19 +1,57 @@
-import axios from 'axios';
-// import { createAsyncThunk } from '@reduxjs/toolkit'
-import {
-   // addContactRequest,
-   // addContactSuccess,
-   // addContactError,
-   // deleteContactRequest,
-   // deleteContactSuccess,
-   // deleteContactError,
-   // fetchContactRequest,
-   // fetchContactSuccess,
-   // fetchContactError,
-} from './contact-action';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-axios.defaults.baseURL = 'https://6234cc41946d59e289747f64.mockapi.io/contacts'
+export const contactApi = createApi({
+  reducerPath: 'contactApi',
+   baseQuery: fetchBaseQuery({ baseUrl: 'https://6234cc41946d59e289747f64.mockapi.io/contacts' }),
+   tagTypes: ['CONTACT'],
+  endpoints: (builder) => ({
+    fetchContacts: builder.query({
+       query: () => `/contacts`,
+            providesTags: ['CONTACT'],
+    }),
+     createContact: builder.mutation({
+        query: newContact => ({
+           url: '/contacts',
+           method: 'POST',
+           body: {
+              name: newContact.name,
+              number: newContact.number,
+            },
+        }),
+         invalidatesTags: ['CONTACT'],
+     }),
+     deleteContact: builder.mutation({
+        query: contactId => ({
+           url: `/contacts/${contactId}`,
+           method: 'DELETE',
+        }),
+         invalidatesTags: ['CONTACT'],
+     })
+  }),
+})
+
+export const {
+   useFetchContactsQuery,
+   useDeleteContactMutation,
+   useCreateContactMutation,
+} = contactApi;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// axios.defaults.baseURL = 'https://6234cc41946d59e289747f64.mockapi.io/contacts'
 
 // ============================================ FETCH
 
@@ -104,43 +142,3 @@ axios.defaults.baseURL = 'https://6234cc41946d59e289747f64.mockapi.io/contacts'
 //   }
 // )
 
-
-// ====================================================     RTK TOOLKIT    ==========================================================
-
-
-
-export const contactApi = createApi({
-  reducerPath: 'contactApi',
-   baseQuery: fetchBaseQuery({ baseUrl: 'https://6234cc41946d59e289747f64.mockapi.io/contacts' }),
-   tagTypes: ['CONTACT'],
-  endpoints: (builder) => ({
-    fetchContacts: builder.query({
-       query: () => `/contacts`,
-            providesTags: ['CONTACT'],
-    }),
-     createContact: builder.mutation({
-        query: newContact => ({
-           url: '/contacts',
-           method: 'POST',
-           body: {
-              name: newContact.name,
-              number: newContact.number,
-            },
-        }),
-         invalidatesTags: ['CONTACT'],
-     }),
-     deleteContact: builder.mutation({
-        query: contactId => ({
-           url: `/contacts/${contactId}`,
-           method: 'DELETE',
-        }),
-         invalidatesTags: ['CONTACT'],
-     })
-  }),
-})
-
-export const {
-   useFetchContactsQuery,
-   useDeleteContactMutation,
-   useCreateContactMutation,
-} = contactApi;
